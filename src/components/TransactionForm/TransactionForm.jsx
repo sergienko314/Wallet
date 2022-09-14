@@ -1,4 +1,4 @@
-const TransactionForm = () => {
+const TransactionForm = ({ openCategoriesHandler }) => {
   return (
     <form>
       <label>
@@ -18,7 +18,12 @@ const TransactionForm = () => {
       </label>
       <label htmlFor="category">
         <p>Category</p>
-        <input type="button" value={'Food'} onChange={() => null}></input>
+        <input
+          type="button"
+          value={'Food'}
+          onClick={openCategoriesHandler}
+          onChange={() => null}
+        ></input>
       </label>
       <label>
         <p>Summary</p>
@@ -29,7 +34,7 @@ const TransactionForm = () => {
         <input type="button" value={'UAH'} onChange={() => null}></input>
       </label>
       <label>
-        <p>Commens</p>
+        <p>Comments</p>
         <input type="text" placeholder="Comments"></input>
       </label>
     </form>

@@ -11,14 +11,18 @@ export class App extends Component {
   render() {
     return (
       <div>
-        {this.state.activePage === 'main' ? (
-          <MainPage changePageHandler={this.changePageHandler} />
-        ) : (
-          <TransactionHistoryPage
-            transactionType={this.state.activePage}
-            changePageHandler={this.changePageHandler}
-          />
-        )}
+        {
+          <>
+            {this.state.activePage === 'main' ? (
+              <MainPage changePageHandler={this.changePageHandler} />
+            ) : (
+              <TransactionHistoryPage
+                transactionType={this.state.activePage}
+                changePageHandler={this.changePageHandler}
+              />
+            )}
+          </>
+        }
       </div>
     );
   }

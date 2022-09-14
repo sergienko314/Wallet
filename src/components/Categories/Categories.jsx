@@ -1,10 +1,8 @@
 import PropTypes from 'prop-types';
-import Header from 'components/Header';
 
 const Categories = ({ categoriesList }) => {
   return (
     <>
-      <Header title="Categories" />
       <ul>
         {categoriesList.map(({ id, category }) => (
           <li key={id}>
