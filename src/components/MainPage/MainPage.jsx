@@ -4,12 +4,12 @@ import MainButtons from '../MainButtons';
 import Categories from 'components/Categories';
 import categoriesList from 'data/categories';
 
-const MainPage = () => (
+const MainPage = ({ changePageHandler }) => (
   <>
     <Header title="Wallet" btnContent="=" />
     <main>
       <TransactionForm />
-      <MainButtons />
+      <MainButtons changePageHandler={changePageHandler} />
       <Categories categoriesList={categoriesList} />
     </main>
   </>

@@ -1,7 +1,21 @@
-const MainButtons = () => (
+const MainButtons = ({ changePageHandler }) => (
   <>
-    <button type="button">Deduction</button>
-    <button type="button">Income</button>
+    <button
+      type="button"
+      onClick={() => {
+        changePageHandler('deduction');
+      }}
+    >
+      Deduction
+    </button>
+    <button
+      type="button"
+      onClick={() => {
+        changePageHandler('income');
+      }}
+    >
+      Income
+    </button>
   </>
 );
 export default MainButtons;
