@@ -29,6 +29,7 @@ export class App extends Component {
               <TransactionHistoryPage
                 transactionType={this.state.activePage}
                 changePageHandler={this.changePageHandler}
+                transactions={this.state.transactions}
               />
             )}
           </>
