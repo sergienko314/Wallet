@@ -1,4 +1,4 @@
-const TransactionHistoryPage = ({ changePageHandler, transactionType }) => {
+const TransactionHistoryPage = ({ changePageHandler, transactionType, transactions }) => {
   return (
     <>
       <h2>TransactionHistoryPage {transactionType}</h2>
@@ -11,6 +11,24 @@ const TransactionHistoryPage = ({ changePageHandler, transactionType }) => {
       >
         Back to Main
       </button>
+      <ul>
+      {transactions.map(()=>{
+        return <li>
+        <p>
+          <span>date</span>
+          <span>time</span>
+        </p>
+        <p>comment</p>
+        <div>
+          <p>summary</p>
+          <p>currency</p>
+        </div>
+        <button type="button">...</button>
+      </li>
+      })}
+      
+      </ul>
+        
     </>
   );
 };
