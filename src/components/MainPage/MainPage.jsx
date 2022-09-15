@@ -28,11 +28,10 @@ class MainPage extends Component {
     this.setState({ isCategories: false });
   };
 
-  setCategory = (category) => {
-    this.setState({ category })
-    this.closeCategoriesHandler()
-
-  }
+  setCategory = category => {
+    this.setState({ category });
+    this.closeCategoriesHandler();
+  };
 
   render() {
     // const data = { date, time, category, summary, currency, comments };
@@ -47,6 +46,7 @@ class MainPage extends Component {
                 openCategoriesHandler={this.openCategoriesHandler}
                 dataForm={dataForm}
                 handleChange={this.handleChange}
+                cbHandleSubmit={this.props.addTransaction}
               />
               <MainButtons changePageHandler={this.props.changePageHandler} />
             </main>
@@ -59,7 +59,10 @@ class MainPage extends Component {
               changePageHandler={this.closeCategoriesHandler}
             />
             <main>
-              <Categories setCategory={this.setCategory} categoriesList={categoriesList} />
+              <Categories
+                setCategory={this.setCategory}
+                categoriesList={categoriesList}
+              />
             </main>
           </>
         )}
