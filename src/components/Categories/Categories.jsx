@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types';
 
-const Categories = ({ categoriesList }) => {
+const Categories = ({ categoriesList, setCategory }) => {
   return (
     <>
       <ul>
         {categoriesList.map(({ id, category }) => (
           <li key={id}>
             <div>
-              <button>{category}</button>
+              <button onClick={() => { setCategory(category) }}>{category}</button>
               <button>...</button>
             </div>
           </li>

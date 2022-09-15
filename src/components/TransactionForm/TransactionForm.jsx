@@ -2,7 +2,9 @@ import { Component } from 'react';
 
 class TransactionForm extends Component {
   render() {
-    const { date, time, category, summary, currency, comments } = this.state;
+    const { date, time, category, summary, currency, comments } = this.props.dataForm;
+    const { handleChange, openCategoriesHandler } = this.props
+    // console.log(this.props);
     return (
       <form>
         <label>
@@ -13,7 +15,7 @@ class TransactionForm extends Component {
             value={date}
             min="2000-01-01"
             max="2100-12-31"
-            onChange={this.handleChange}
+            onChange={handleChange}
           />
         </label>
         <label>
@@ -22,7 +24,7 @@ class TransactionForm extends Component {
             type="time"
             name="time"
             value={time}
-            onChange={this.handleChange}
+            onChange={handleChange}
           />
         </label>
         <label htmlFor="category">
@@ -31,8 +33,8 @@ class TransactionForm extends Component {
             type="button"
             value={category}
             name="category"
-            onClick={this.props.openCategoriesHandler}
-            onChange={this.handleChange}
+            onClick={openCategoriesHandler}
+            onChange={handleChange}
           ></input>
         </label>
         <label>
@@ -42,7 +44,7 @@ class TransactionForm extends Component {
             value={summary}
             name="summary"
             placeholder="Summary"
-            onChange={this.handleChange}
+            onChange={handleChange}
           ></input>
         </label>
         <label>
@@ -51,7 +53,7 @@ class TransactionForm extends Component {
             type="button"
             name="currency"
             value={currency}
-            onChange={this.handleChange}
+            onChange={handleChange}
           ></input>
         </label>
         <label>
@@ -61,7 +63,7 @@ class TransactionForm extends Component {
             value={comments}
             name="comments"
             placeholder="Comments"
-            onChange={this.handleChange}
+            onChange={handleChange}
           ></input>
         </label>
       </form>
