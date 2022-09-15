@@ -2,6 +2,7 @@ const TransactionHistoryPage = ({ changePageHandler, transactionType, transactio
   return (
     <>
       <h2>TransactionHistoryPage {transactionType}</h2>
+      console.log(transactionType)
 
       <button
         type="button"
