@@ -1,21 +1,23 @@
+import styled from "styled-components";
+import { Wrapper,Button } from "./MainButtons.styled";
 const MainButtons = ({ changePageHandler }) => (
-  <>
-    <button
+  <Wrapper>
+    <Button
       type="button"
       onClick={() => {
         changePageHandler('deduction');
       }}
     >
       Deduction
-    </button>
-    <button
+    </Button>
+    <Button
       type="button"
       onClick={() => {
         changePageHandler('income');
       }}
     >
       Income
-    </button>
-  </>
+    </Button>
+  </Wrapper>
 );
 export default MainButtons;
