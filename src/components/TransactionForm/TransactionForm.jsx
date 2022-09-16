@@ -1,3 +1,7 @@
+import {Form, Label, InputTitle, Input, Submit }from "./TransactionForm.styled";
+import sprite from '../../assets/icons/sprite.svg';
+
+
 const TransactionForm = ({
   cbHandleSubmit,
   dataForm,
@@ -11,10 +15,10 @@ const TransactionForm = ({
   const { date, time, category, summary, currency, comments } = dataForm;
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        <p>Date</p>
-        <input
+    <Form onSubmit={handleSubmit}>
+      <Label>
+        <InputTitle>Date</InputTitle>
+        <Input
           type="date"
           name="date"
           value={date}
@@ -22,52 +26,55 @@ const TransactionForm = ({
           max="2100-12-31"
           onChange={handleChange}
         />
-      </label>
-      <label>
-        <p>Time</p>
-        <input type="time" name="time" value={time} onChange={handleChange} />
-      </label>
-      <label htmlFor="category">
-        <p>Category</p>
-        <input
+      </Label>
+      <Label>
+        <InputTitle>Time</InputTitle>
+        <Input type="time" name="time" value={time} onChange={handleChange} />
+      </Label>
+      <Label htmlFor="category">
+        <InputTitle>Category</InputTitle>
+        <Input
           type="button"
           value={category}
           name="category"
           onClick={openCategoriesHandler}
           onChange={handleChange}
-        ></input>
-      </label>
-      <label>
-        <p>Summary</p>
-        <input
+        ></Input>
+      </Label>
+      <Label>
+        <InputTitle>Summary</InputTitle>
+        <Input
           type="text"
           value={summary}
           name="summary"
           placeholder="Summary"
           onChange={handleChange}
-        ></input>
-      </label>
-      <label>
-        <p>Currency</p>
-        <input
+        ></Input>
+      </Label>
+      <Label>
+        <InputTitle>Currency</InputTitle>
+        <Input
           type="button"
           name="currency"
           value={currency}
           onChange={handleChange}
-        ></input>
-      </label>
-      <label>
-        <p>Comments</p>
-        <input
+        ></Input>
+      </Label>
+      <Label>
+        <InputTitle>Comments</InputTitle>
+        <Input
           type="text"
           value={comments}
           name="comments"
           placeholder="Comments"
           onChange={handleChange}
-        ></input>
-      </label>
-      <button type="submit">Save</button>
-    </form>
+        ></Input>
+      </Label>
+      <Submit type="submit">
+      <svg>
+            <use href={sprite + '#icon-checkmark'}></use>
+          </svg></Submit>
+    </Form>
   );
 };
 
