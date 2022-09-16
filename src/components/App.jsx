@@ -6,7 +6,7 @@ import TransactionHistoryPage from './TransactionHistoryPage';
 export class App extends Component {
   state = { activePage: 'main', transactions: [] };
 
-  changePageHandler = page => {
+  changePageHandler = (page = 'main') => {
     this.setState({ activePage: page });
   };
 

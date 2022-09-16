@@ -1,35 +1,46 @@
-const TransactionHistoryPage = ({ changePageHandler, transactionType, transactions }) => {
+import Header from '../Header';
+import {
+  Item,
+  List,
+  MainWrapper,
+  DateContainer,
+  Summary,
+  Currency,
+} from './TransactionHistoryPage.styled';
+
+const TransactionHistoryPage = ({
+  changePageHandler,
+  transactionType,
+  transactions,
+}) => {
   return (
     <>
-      <h2>TransactionHistoryPage {transactionType}</h2>
-      console.log(transactionType)
-
-      <button
-        type="button"
-        onClick={() => {
-          changePageHandler('main');
-        }}
-      >
-        Back to Main
-      </button>
-      <ul>
-      {transactions.map(()=>{
-        return <li>
-        <p>
-          <span>date</span>
-          <span>time</span>
-        </p>
-        <p>comment</p>
-        <div>
-          <p>summary</p>
-          <p>currency</p>
-        </div>
-        <button type="button">...</button>
-      </li>
-      })}
-      
-      </ul>
-        
+      <Header
+        title={transactionType === 'deduction' ? 'Расходы' : 'Доходы'}
+        changePageHandler={changePageHandler}
+      />
+      <List>
+        {transactions.map(({ date, time, summary, currency, comment }) => {
+          return (
+            <Item>
+              <MainWrapper>
+                <div>
+                  <DateContainer>
+                    <span>{date}</span>
+                    <span>{time}</span>
+                  </DateContainer>
+                  <p>{comment}</p>
+                </div>
+                <div>
+                  <Summary>{summary}</Summary>
+                  <Currency>{currency}</Currency>
+                </div>
+              </MainWrapper>
+              <button type="button">...</button>
+            </Item>
+          );
+        })}
+      </List>
     </>
   );
 };

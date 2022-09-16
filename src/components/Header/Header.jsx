@@ -4,10 +4,10 @@ console.log(sprite);
 const Header = ({ title, btnContent, changePageHandler }) => {
   return (
     <HeaderStyled>
-      {btnContent ? (
+      {changePageHandler ? (
         <Button
           onClick={() => {
-            changePageHandler('main');
+            changePageHandler();
           }}
         >
           <svg>
