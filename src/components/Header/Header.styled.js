@@ -4,6 +4,7 @@ export const HeaderStyled = styled.header`
   background-color: orange;
   display: flex;
   align-items: center;
+  padding: 16px 0;
 `;
 
 export const Button = styled.button`
