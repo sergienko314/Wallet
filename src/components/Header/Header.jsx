@@ -1,21 +1,22 @@
+import { HeaderStyled, Button } from './Header.styled';
+import sprite from '../../assets/icons/sprite.svg';
+console.log(sprite);
 const Header = ({ title, btnContent, changePageHandler }) => {
   return (
-    <header
-      style={{
-        backgroundColor: 'pink',
-      }}
-    >
+    <HeaderStyled>
       {btnContent ? (
-        <button
+        <Button
           onClick={() => {
             changePageHandler('main');
           }}
         >
-          {btnContent}
-        </button>
+          <svg>
+            <use href={sprite + '#icon-arrow-left2'}></use>
+          </svg>
+        </Button>
       ) : null}
       <h1>{title}</h1>
-    </header>
+    </HeaderStyled>
   );
 };
 
