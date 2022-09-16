@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import Conteiner from './Conteiner/Conteiner';
 import MainPage from './MainPage';
 import TransactionHistoryPage from './TransactionHistoryPage';
 
@@ -17,7 +18,7 @@ export class App extends Component {
 
   render() {
     return (
-      <div>
+      <Conteiner>
         {
           <>
             {this.state.activePage === 'main' ? (
@@ -34,7 +35,7 @@ export class App extends Component {
             )}
           </>
         }
-      </div>
+      </Conteiner>
     );
   }
 }
