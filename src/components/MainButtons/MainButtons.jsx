@@ -1,4 +1,4 @@
-import styled from "styled-components";
+
 import { Wrapper,Button } from "./MainButtons.styled";
 const MainButtons = ({ changePageHandler }) => (
   <Wrapper>
