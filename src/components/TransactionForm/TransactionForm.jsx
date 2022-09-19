@@ -1,6 +1,11 @@
-import {Form, Label, InputTitle, Input, Submit }from "./TransactionForm.styled";
+import {
+  Form,
+  Label,
+  InputTitle,
+  Input,
+  Submit,
+} from './TransactionForm.styled';
 import sprite from '../../assets/icons/sprite.svg';
-
 
 const TransactionForm = ({
   cbHandleSubmit,
@@ -12,10 +17,39 @@ const TransactionForm = ({
     e.preventDefault();
     cbHandleSubmit(dataForm);
   };
-  const { date, time, category, summary, currency, comments } = dataForm;
+  const {
+    date,
+    time,
+    category,
+    summary,
+    currency,
+    comments,
+    transactionType,
+  } = dataForm;
 
   return (
     <Form onSubmit={handleSubmit}>
+      <label>
+        <span>Income</span>
+        <input
+          type="radio"
+          name="transactionType"
+          value="income"
+          onChange={handleChange}
+          checked={transactionType === 'income'}
+        />
+      </label>
+      <label>
+        <span>Deduction</span>
+        <input
+          type="radio"
+          name="transactionType"
+          value="deduction"
+          onChange={handleChange}
+          checked={transactionType === 'deduction'}
+        />
+      </label>
+
       <Label>
         <InputTitle>Date</InputTitle>
         <Input
@@ -71,9 +105,10 @@ const TransactionForm = ({
         ></Input>
       </Label>
       <Submit type="submit">
-      <svg>
-            <use href={sprite + '#icon-checkmark'}></use>
-          </svg></Submit>
+        <svg>
+          <use href={sprite + '#icon-checkmark'}></use>
+        </svg>
+      </Submit>
     </Form>
   );
 };
