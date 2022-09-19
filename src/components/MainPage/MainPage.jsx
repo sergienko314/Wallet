@@ -2,7 +2,6 @@ import Header from '../Header';
 import TransactionForm from '../TransactionForm';
 import MainButtons from '../MainButtons';
 import Categories from 'components/Categories';
-import categoriesList from 'data/categories';
 import { Component } from 'react';
 
 class MainPage extends Component {
@@ -37,6 +36,8 @@ class MainPage extends Component {
   render() {
     // const data = { date, time, category, summary, currency, comments };
     const { isCategories, ...dataForm } = this.state;
+    const { addTransaction, changePageHandler, addCategory, categories } =
+      this.props;
     return (
       <>
         {!this.state.isCategories ? (
@@ -47,9 +48,9 @@ class MainPage extends Component {
                 openCategoriesHandler={this.openCategoriesHandler}
                 dataForm={dataForm}
                 handleChange={this.handleChange}
-                cbHandleSubmit={this.props.addTransaction}
+                cbHandleSubmit={addTransaction}
               />
-              <MainButtons changePageHandler={this.props.changePageHandler} />
+              <MainButtons changePageHandler={changePageHandler} />
             </main>
           </>
         ) : (
@@ -61,7 +62,13 @@ class MainPage extends Component {
             <main>
               <Categories
                 setCategory={this.setCategory}
-                categoriesList={categoriesList}
+                categoriesList={
+                  dataForm.transactionType === 'deduction'
+                    ? categories.deductionCategories
+                    : categories.incomeCategories
+                }
+                addCategory={addCategory}
+                transactionType={dataForm.transactionType}
               />
             </main>
           </>

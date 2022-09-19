@@ -8,28 +8,28 @@ export class App extends Component {
     activePage: 'main',
     deduction: [],
     income: [],
+    deductionCategories: [],
+    incomeCategories: [],
   };
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.deduction !== this.state.deduction) {
-      localStorage.setItem('deduction', JSON.stringify(this.state.deduction))
+      localStorage.setItem('deduction', JSON.stringify(this.state.deduction));
     }
 
-        if (prevState.income !== this.state.income) {
-      localStorage.setItem('income', JSON.stringify(this.state.income))
+    if (prevState.income !== this.state.income) {
+      localStorage.setItem('income', JSON.stringify(this.state.income));
     }
   }
 
   componentDidMount() {
-    const deduction = JSON.parse(localStorage.getItem('deduction'))
-    const income = JSON.parse(localStorage.getItem('income'))
+    const deduction = JSON.parse(localStorage.getItem('deduction')) || [];
+    const income = JSON.parse(localStorage.getItem('income')) || [];
     this.setState({
-    deduction,
-    income,
-    })
+      deduction,
+      income,
+    });
   }
-
-
 
   changePageHandler = (page = 'main') => {
     this.setState({ activePage: page });
@@ -42,8 +42,27 @@ export class App extends Component {
     });
   };
 
+  // {
+  //   id: '1',
+  //   category: 'Food',
+  // },
+
+  addCategory = (category, transactionType) => {
+    this.setState(prev => {
+      return transactionType === 'deduction'
+        ? { deductionCategories: [...prev.deductionCategories, category] }
+        : { incomeCategories: [...prev.incomeCategories, category] };
+    });
+  };
+
   render() {
-    const { deduction, income, activePage } = this.state;
+    const {
+      deduction,
+      income,
+      activePage,
+      deductionCategories,
+      incomeCategories,
+    } = this.state;
     return (
       <Conteiner>
         {
@@ -52,6 +71,11 @@ export class App extends Component {
               <MainPage
                 changePageHandler={this.changePageHandler}
                 addTransaction={this.addTransaction}
+                addCategory={this.addCategory}
+                categories={{
+                  deductionCategories,
+                  incomeCategories,
+                }}
               />
             ) : (
               <TransactionHistoryPage
