@@ -39,6 +39,7 @@ height : 50px;
 padding: 0;
 border: none;
 background-color: transparent;
+:active{transform: scale(0.95)} 
 & svg {
     width: 50px;
     height : 50px;
