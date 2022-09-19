@@ -4,33 +4,35 @@ import MainPage from './MainPage';
 import TransactionHistoryPage from './TransactionHistoryPage';
 
 export class App extends Component {
-  state = { activePage: 'main', transactions: [] };
+  state = { activePage: 'main', deduction: [], income: [] };
 
   changePageHandler = (page = 'main') => {
     this.setState({ activePage: page });
   };
 
   addTransaction = transaction => {
+    const { transactionType } = transaction;
     this.setState(prev => {
-      return { transactions: [...prev.transactions, transaction] };
+      return { [transactionType]: [...prev[transactionType], transaction] };
     });
   };
 
   render() {
+    const { deduction, income, activePage } = this.state;
     return (
       <Conteiner>
         {
           <>
-            {this.state.activePage === 'main' ? (
+            {activePage === 'main' ? (
               <MainPage
                 changePageHandler={this.changePageHandler}
                 addTransaction={this.addTransaction}
               />
             ) : (
               <TransactionHistoryPage
-                transactionType={this.state.activePage}
+                transactionType={activePage}
                 changePageHandler={this.changePageHandler}
-                transactions={this.state.transactions}
+                transactions={activePage === 'deduction' ? deduction : income}
               />
             )}
           </>
