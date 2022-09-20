@@ -20,14 +20,32 @@ export class App extends Component {
     if (prevState.income !== this.state.income) {
       localStorage.setItem('income', JSON.stringify(this.state.income));
     }
+    if (prevState.deductionCategories !== this.state.deductionCategories) {
+      localStorage.setItem(
+        'deductionCategories',
+        JSON.stringify(this.state.deductionCategories)
+      );
+    }
+    if (prevState.incomeCategories !== this.state.incomeCategories) {
+      localStorage.setItem(
+        'incomeCategories',
+        JSON.stringify(this.state.incomeCategories)
+      );
+    }
   }
 
   componentDidMount() {
     const deduction = JSON.parse(localStorage.getItem('deduction')) || [];
     const income = JSON.parse(localStorage.getItem('income')) || [];
+    const deductionCategories =
+      JSON.parse(localStorage.getItem('deductionCategories')) || [];
+    const incomeCategories =
+      JSON.parse(localStorage.getItem('incomeCategories')) || [];
     this.setState({
       deduction,
       income,
+      incomeCategories,
+      deductionCategories,
     });
   }
 
