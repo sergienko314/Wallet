@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import { resetWarningCache } from 'prop-types';
 import { Component } from 'react';
 
 class Categories extends Component {
@@ -25,20 +24,26 @@ class Categories extends Component {
   };
   handleSubmit = e => {
     e.preventDefault();
-
-    const { addCategory, transactionType } = this.props;
-    addCategory(
-      {
-        id: Date.now(),
-        category: this.state.input,
-      },
-      transactionType
-    );
+    const { addCategory, transactionType, categoriesList } = this.props;
+    const normalizedInput = this.state.input.toLowerCase();
+      (
+      categoriesList.some(
+        elem => elem.category.toLowerCase() === normalizedInput
+      )
+    )
+      ? alert('i have this category')
+      : addCategory(
+          {
+            id: Date.now(),
+            category: this.state.input,
+          },
+          transactionType
+        );
     this.reset();
   };
-
+  
   render() {
-    const { categoriesList, setCategory } = this.props;
+    const { removeCategory ,transactionType, categoriesList, setCategory } = this.props;
     const { idMenu } = this.state;
     return (
       <>
@@ -60,7 +65,7 @@ class Categories extends Component {
                       <button>Edit</button>
                     </li>
                     <li>
-                      <button>Remove</button>
+                      <button onClick={()=>removeCategory(id, transactionType)}>Remove</button>
                     </li>
                   </ul>
                 )}
