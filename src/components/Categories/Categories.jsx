@@ -1,15 +1,28 @@
 import PropTypes from 'prop-types';
+import { resetWarningCache } from 'prop-types';
 import { Component } from 'react';
 
 class Categories extends Component {
   state = {
     input: '',
+    isMenuOpen: false,
+    idMenu: '',
   };
 
   handleChange = e => {
     this.setState({ input: e.target.value });
   };
-
+  reset = () => {
+    this.setState({ input: '' });
+  };
+  handleOpenMenu = id => {
+    this.setState(prevState => {
+      return {
+        isMenuOpen: true,
+        idMenu: prevState.idMenu === id ? '' : id,
+      };
+    });
+  };
   handleSubmit = e => {
     e.preventDefault();
 
@@ -21,10 +34,12 @@ class Categories extends Component {
       },
       transactionType
     );
+    this.reset();
   };
 
   render() {
     const { categoriesList, setCategory } = this.props;
+    const { idMenu } = this.state;
     return (
       <>
         <ul>
@@ -38,7 +53,17 @@ class Categories extends Component {
                 >
                   {category}
                 </button>
-                <button>...</button>
+                <button onClick={() => this.handleOpenMenu(id)}>...</button>
+                {id === idMenu && (
+                  <ul>
+                    <li>
+                      <button>Edit</button>
+                    </li>
+                    <li>
+                      <button>Remove</button>
+                    </li>
+                  </ul>
+                )}
               </div>
             </li>
           ))}
