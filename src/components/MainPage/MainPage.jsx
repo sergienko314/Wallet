@@ -36,7 +36,7 @@ class MainPage extends Component {
   render() {
     // const data = { date, time, category, summary, currency, comments };
     const { isCategories, ...dataForm } = this.state;
-    const { addTransaction, changePageHandler, addCategory, categories } =
+    const {removeCategory, addTransaction, changePageHandler, addCategory, categories } =
       this.props;
     return (
       <>
@@ -60,7 +60,8 @@ class MainPage extends Component {
               changePageHandler={this.closeCategoriesHandler}
             />
             <main>
-              <Categories
+                <Categories
+                  removeCategory={removeCategory}
                 setCategory={this.setCategory}
                 categoriesList={
                   dataForm.transactionType === 'deduction'

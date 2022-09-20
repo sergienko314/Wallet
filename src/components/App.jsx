@@ -11,6 +11,7 @@ export class App extends Component {
     deductionCategories: [],
     incomeCategories: [],
   };
+  
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.deduction !== this.state.deduction) {
@@ -73,6 +74,14 @@ export class App extends Component {
     });
   };
 
+  removeCategory = (id, transactionType) => {
+  this.setState((prev) =>
+    (transactionType === 'deduction')
+      ? { deductionCategories: prev.deductionCategories.filter((cat) => (cat.id !== id)) }
+      : { incomeCategories: prev.incomeCategories.filter((cat) => (cat.id !== id)) } )
+  }
+
+
   render() {
     const {
       deduction,
@@ -87,6 +96,7 @@ export class App extends Component {
           <>
             {activePage === 'main' ? (
               <MainPage
+                removeCategory={this.removeCategory}
                 changePageHandler={this.changePageHandler}
                 addTransaction={this.addTransaction}
                 addCategory={this.addCategory}
