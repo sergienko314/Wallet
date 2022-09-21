@@ -12,20 +12,15 @@ const TransactionForm = ({
   dataForm,
   handleChange,
   openCategoriesHandler,
+  reset,
 }) => {
   const handleSubmit = e => {
     e.preventDefault();
     cbHandleSubmit(dataForm);
+    reset();
   };
-  const {
-    date,
-    time,
-    category,
-    summary,
-    currency,
-    comments,
-    transactionType,
-  } = dataForm;
+  const { date, time, category, summary, currency, comments, transactionType } =
+    dataForm;
 
   return (
     <Form onSubmit={handleSubmit}>
