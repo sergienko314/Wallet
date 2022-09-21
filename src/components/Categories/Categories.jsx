@@ -1,92 +1,98 @@
 import PropTypes from 'prop-types';
-import { Component } from 'react';
+import {useState } from 'react';
 
-class Categories extends Component {
-  state = {
-    input: '',
-    isMenuOpen: false,
-    idMenu: '',
-  };
+const Categories = ({
+  addCategory,
+  transactionType,
+  categoriesList,
+  setCategory,
+  removeCategory,
+}) => {
+  const [input, setInput] = useState('');
+  const [idMenu, setIdMenu] = useState('');
 
-  handleChange = e => {
-    this.setState({ input: e.target.value });
+  const handleChange = e => {
+    setInput(e.target.value);
   };
-  reset = () => {
-    this.setState({ input: '' });
+  const reset = () => {
+    setInput('');
   };
-  handleOpenMenu = id => {
-    this.setState(prevState => {
-      return {
-        isMenuOpen: true,
-        idMenu: prevState.idMenu === id ? '' : id,
-      };
+  const handleOpenMenu = id => {
+    setIdMenu(prevIdMenu => {
+      return prevIdMenu === id ? '' : id;
     });
   };
-  handleSubmit = e => {
+  const handleSubmit = e => {
     e.preventDefault();
-    const { addCategory, transactionType, categoriesList } = this.props;
-    const normalizedInput = this.state.input.toLowerCase();
-      (
-      categoriesList.some(
-        elem => elem.category.toLowerCase() === normalizedInput
-      )
-    )
+
+    if(!input) {
+      alert('enter smth')
+      return
+    }
+
+    const normalizedInput = input.toLowerCase();
+    categoriesList.some(elem => elem.category.toLowerCase() === normalizedInput)
+
       ? alert('i have this category')
       : addCategory(
           {
             id: Date.now(),
-            category: this.state.input,
+            category: input,
           },
           transactionType
         );
-    this.reset();
+    reset();
   };
-  
-  render() {
-    const { removeCategory ,transactionType, categoriesList, setCategory } = this.props;
-    const { idMenu } = this.state;
-    return (
-      <>
-        <ul>
-          {categoriesList.map(({ id, category }) => (
-            <li key={id}>
-              <div>
-                <button
-                  onClick={() => {
-                    setCategory(category);
-                  }}
-                >
-                  {category}
-                </button>
-                <button onClick={() => this.handleOpenMenu(id)}>...</button>
-                {id === idMenu && (
-                  <ul>
-                    <li>
-                      <button>Edit</button>
-                    </li>
-                    <li>
-                      <button onClick={()=>removeCategory(id, transactionType)}>Remove</button>
-                    </li>
-                  </ul>
-                )}
-              </div>
-            </li>
-          ))}
-        </ul>
-        <form onSubmit={this.handleSubmit}>
-          <input
-            type="text"
-            placeholder="New category"
-            name="input"
-            value={this.state.input}
-            onChange={this.handleChange}
-          />
-          <button type="submit">+</button>
-        </form>
-      </>
-    );
-  }
-}
+
+  return (
+    <>
+      <ul>
+        {categoriesList.map(({ id, category }) => (
+          <li key={id}>
+            <div>
+              <button
+                onClick={() => {
+                  setCategory(category);
+                }}
+              >
+                {category}
+              </button>
+              <button onClick={() => handleOpenMenu(id)}>...</button>
+              {id === idMenu && (
+                <ul>
+                  <li>
+                    <button>Edit</button>
+                  </li>
+                  <li>
+                    <button onClick={() => removeCategory(id, transactionType)}>
+                      Remove
+                    </button>
+                  </li>
+                </ul>
+              )}
+            </div>
+          </li>
+        ))}
+      </ul>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="New category"
+          name="input"
+          value={input}
+          onChange={handleChange}
+        />
+        <button type="submit">+</button>
+      </form>
+    </>
+  );
+};
+
+//   addCategory,
+  // transactionType,
+  // categoriesList,
+  // setCategory,
+  // removeCategory,
 
 Categories.propTypes = {
   categoriesList: PropTypes.arrayOf(
@@ -95,5 +101,9 @@ Categories.propTypes = {
       category: PropTypes.string.isRequired,
     })
   ),
+  addCategory:PropTypes.func.isRequired,
+  transactionType:PropTypes.string.isRequired,
+  setCategory:PropTypes.func.isRequired,
+  removeCategory:PropTypes.func.isRequired,
 };
 export default Categories;
