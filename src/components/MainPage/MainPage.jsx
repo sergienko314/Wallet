@@ -2,80 +2,92 @@ import Header from '../Header';
 import TransactionForm from '../TransactionForm';
 import MainButtons from '../MainButtons';
 import Categories from 'components/Categories';
-import { Component } from 'react';
+import { useState } from 'react';
 
-class MainPage extends Component {
-  state = {
-    isCategories: false,
-    date: '',
-    time: '',
-    category: 'food',
-    summary: '',
-    currency: 'uah',
-    comments: '',
-    transactionType: 'deduction',
-  };
+const initialForm = {
+  date: '',
+  time: '',
+  category: 'food',
+  summary: '',
+  currency: 'uah',
+  comments: '',
+  transactionType: 'deduction',
+};
 
-  handleChange = e => {
+const MainPage = ({
+  removeCategory,
+  addTransaction,
+  changePageHandler,
+  addCategory,
+  categories,
+}) => {
+  const [form, setForm] = useState(initialForm);
+  const [isCategories, setIsCategories] = useState(false);
+
+  const handleChange = e => {
     const { name, value } = e.target;
-    this.setState({ [name]: value });
+
+    setForm(prevForm => {
+      return { ...prevForm, [name]: value };
+    });
   };
 
-  openCategoriesHandler = () => {
-    this.setState({ isCategories: true });
+  const openCategoriesHandler = () => {
+    setIsCategories(true);
   };
-  closeCategoriesHandler = () => {
-    this.setState({ isCategories: false });
-  };
-
-  setCategory = category => {
-    this.setState({ category });
-    this.closeCategoriesHandler();
+  const closeCategoriesHandler = () => {
+    setIsCategories(false);
   };
 
-  render() {
-    // const data = { date, time, category, summary, currency, comments };
-    const { isCategories, ...dataForm } = this.state;
-    const {removeCategory, addTransaction, changePageHandler, addCategory, categories } =
-      this.props;
-    return (
-      <>
-        {!this.state.isCategories ? (
-          <>
-            <Header title="Wallet" />
-            <main>
-              <TransactionForm
-                openCategoriesHandler={this.openCategoriesHandler}
-                dataForm={dataForm}
-                handleChange={this.handleChange}
-                cbHandleSubmit={addTransaction}
-              />
-              <MainButtons changePageHandler={changePageHandler} />
-            </main>
-          </>
-        ) : (
-          <>
-            <Header
-              title="Categories"
-              changePageHandler={this.closeCategoriesHandler}
+  const setCategory = category => {
+    setForm(prevForm => {
+      return { ...prevForm, category };
+    });
+    closeCategoriesHandler();
+  };
+
+  const reset = () => {
+    setForm(initialForm);
+  };
+
+  return (
+    <>
+      {!isCategories ? (
+        <>
+          <Header title="Wallet" />
+          <main>
+            <TransactionForm
+              openCategoriesHandler={openCategoriesHandler}
+              dataForm={form}
+              handleChange={handleChange}
+              cbHandleSubmit={addTransaction}
+              reset={reset}
             />
-            <main>
-                <Categories
-                  removeCategory={removeCategory}
-                setCategory={this.setCategory}
-                categoriesList={
-                  dataForm.transactionType === 'deduction'
-                    ? categories.deductionCategories
-                    : categories.incomeCategories
-                }
-                addCategory={addCategory}
-                transactionType={dataForm.transactionType}
-              />
-            </main>
-          </>
-        )}
-      </>
-    );
-  }
-}
+            <MainButtons changePageHandler={changePageHandler} />
+          </main>
+        </>
+      ) : (
+        <>
+          <Header
+            title="Categories"
+            changePageHandler={closeCategoriesHandler}
+          />
+          <main>
+            <Categories
+              removeCategory={removeCategory}
+              setCategory={setCategory}
+              categoriesList={
+                form.transactionType === 'deduction'
+                  ? categories.deductionCategories
+                  : categories.incomeCategories
+              }
+              addCategory={addCategory}
+              transactionType={form.transactionType}
+            />
+          </main>
+        </>
+      )}
+    </>
+  );
+};
 export default MainPage;
