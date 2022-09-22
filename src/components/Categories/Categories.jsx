@@ -1,15 +1,17 @@
+import { CategoriesContext } from '../../context';
 import PropTypes from 'prop-types';
+import { useContext } from 'react';
 import { useState } from 'react';
 
-const Categories = ({
-  addCategory,
-  transactionType,
-  categoriesList,
-  setCategory,
-  removeCategory,
-}) => {
+const Categories = ({ transactionType, setCategory }) => {
+  const value = useContext(CategoriesContext);
+
   const [input, setInput] = useState('');
   const [idMenu, setIdMenu] = useState('');
+  const categoriesList =
+    transactionType === 'deduction'
+      ? value.deductionCategories
+      : value.incomeCategories;
 
   const handleChange = e => {
     setInput(e.target.value.trimStart());
@@ -34,7 +36,7 @@ const Categories = ({
 
     categoriesList.some(elem => elem.category.toLowerCase() === normalizedInput)
       ? alert('i have this category')
-      : addCategory(
+      : value.addCategory(
           {
             id: Date.now(),
             category: inputTrimed,
@@ -64,7 +66,9 @@ const Categories = ({
                     <button>Edit</button>
                   </li>
                   <li>
-                    <button onClick={() => removeCategory(id, transactionType)}>
+                    <button
+                      onClick={() => value.removeCategory(id, transactionType)}
+                    >
                       Remove
                     </button>
                   </li>
@@ -95,15 +99,7 @@ const Categories = ({
 // removeCategory,
 
 Categories.propTypes = {
-  categoriesList: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-      category: PropTypes.string.isRequired,
-    })
-  ),
-  addCategory: PropTypes.func.isRequired,
   transactionType: PropTypes.string.isRequired,
   setCategory: PropTypes.func.isRequired,
-  removeCategory: PropTypes.func.isRequired,
 };
 export default Categories;

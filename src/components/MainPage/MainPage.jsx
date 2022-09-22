@@ -19,7 +19,7 @@ const MainPage = ({
 
   changePageHandler,
   addCategory,
-  categories,
+  // categories,
 }) => {
   const [form, setForm] = useState(initialForm);
   const [isCategories, setIsCategories] = useState(false);
@@ -75,11 +75,9 @@ const MainPage = ({
             <Categories
               removeCategory={removeCategory}
               setCategory={setCategory}
-              categoriesList={
-                form.transactionType === 'deduction'
-                  ? categories.deductionCategories
-                  : categories.incomeCategories
-              }
+              // categoriesList={
+              //  
+              // }
               addCategory={addCategory}
               transactionType={form.transactionType}
             />
