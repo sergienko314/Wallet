@@ -2,16 +2,10 @@ import { useState, useEffect } from 'react';
 import Conteiner from './Conteiner/Conteiner';
 import MainPage from './MainPage';
 import TransactionHistoryPage from './TransactionHistoryPage';
-
-const getInitialState = key => {
-  return JSON.parse(localStorage.getItem(key)) || [];
-};
-const setToLS = (key, data) => localStorage.setItem(key, JSON.stringify(data));
+import { setToLS, getInitialState } from '../helpers';
 
 export const App = () => {
   const [activePage, setActivePage] = useState('main');
-  const [deduction, setDeduction] = useState(getInitialState('deduction'));
-  const [income, setIncome] = useState(getInitialState('income'));
   const [deductionCategories, setDeductionCategories] = useState(
     getInitialState('deductionCategories')
   );
@@ -21,20 +15,6 @@ export const App = () => {
 
   const changePageHandler = (page = 'main') => {
     setActivePage(page);
-  };
-
-  const addTransaction = transaction => {
-    const { transactionType } = transaction;
-    if (transactionType === 'income') {
-      setIncome(prewIncome => {
-        return [...prewIncome, transaction];
-      });
-    }
-    if (transactionType === 'deduction') {
-      setDeduction(prewDeduction => {
-        return [...prewDeduction, transaction];
-      });
-    }
   };
 
   const addCategory = (category, transactionType) => {
@@ -56,12 +36,7 @@ export const App = () => {
       setincomeCategories(preState => preState.filter(cat => cat.id !== id));
   };
 
-  useEffect(() => {
-    setToLS('deduction', deduction);
-  }, [deduction]);
-  useEffect(() => {
-    setToLS('income', income);
-  }, [income]);
+ 
   useEffect(() => {
     setToLS('deductionCategories', deductionCategories);
   }, [deductionCategories]);
@@ -76,7 +51,6 @@ export const App = () => {
           <MainPage
             removeCategory={removeCategory}
             changePageHandler={changePageHandler}
-            addTransaction={addTransaction}
             addCategory={addCategory}
             categories={{
               deductionCategories,
@@ -87,7 +61,7 @@ export const App = () => {
           <TransactionHistoryPage
             transactionType={activePage}
             changePageHandler={changePageHandler}
-            transactions={activePage === 'deduction' ? deduction : income}
+            // transactions={activePage === 'deduction' ? deduction : income}
           />
         )}
       </>
