@@ -16,7 +16,7 @@ const initialForm = {
 
 const MainPage = ({
   removeCategory,
-  addTransaction,
+
   changePageHandler,
   addCategory,
   categories,
@@ -60,7 +60,6 @@ const MainPage = ({
               openCategoriesHandler={openCategoriesHandler}
               dataForm={form}
               handleChange={handleChange}
-              cbHandleSubmit={addTransaction}
               reset={reset}
             />
             <MainButtons changePageHandler={changePageHandler} />
