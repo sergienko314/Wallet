@@ -15,10 +15,11 @@ const TransactionForm = ({
   openCategoriesHandler,
   reset,
 }) => {
-  const {addTransaction} = useContext(TransactionContext);
+  const { addTransaction } = useContext(TransactionContext);
 
   const handleSubmit = e => {
     e.preventDefault();
+    dataForm.id = Date.now();
     addTransaction(dataForm);
     reset();
   };

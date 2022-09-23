@@ -1,4 +1,5 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
+
 import Header from '../Header';
 import {
   Item,
@@ -11,8 +12,15 @@ import {
 import { TransactionContext } from '../../context';
 
 const TransactionHistoryPage = ({ changePageHandler, transactionType }) => {
+  const [idMenu, setIdMenu] = useState('');
   const transactionsValue = useContext(TransactionContext);
   const transactions = transactionsValue[transactionType];
+
+  const handleOpenMenu = id => {
+    setIdMenu(prevIdMenu => {
+      return prevIdMenu === id ? '' : id;
+    });
+  };
   return (
     <>
       <Header
@@ -20,9 +28,9 @@ const TransactionHistoryPage = ({ changePageHandler, transactionType }) => {
         changePageHandler={changePageHandler}
       />
       <List>
-        {transactions.map(({ date, time, summary, currency, comment }) => {
+        {transactions.map(({ id, date, time, summary, currency, comment }) => {
           return (
-            <Item>
+            <Item key={id}>
               <MainWrapper>
                 <div>
                   <DateContainer>
@@ -36,7 +44,25 @@ const TransactionHistoryPage = ({ changePageHandler, transactionType }) => {
                   <Currency>{currency}</Currency>
                 </div>
               </MainWrapper>
-              <button type="button">...</button>
+              <button type="button" onClick={() => handleOpenMenu(id)}>
+                ...
+              </button>
+              {id === idMenu && (
+                <ul>
+                  <li>
+                    <button>Edit</button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() =>
+                        transactionsValue.removeTransaction(id, transactionType)
+                      }
+                    >
+                      Remove
+                    </button>
+                  </li>
+                </ul>
+              )}
             </Item>
           );
         })}
