@@ -4,8 +4,8 @@ import { setToLS, getInitialState } from '../helpers';
 export const TransactionContext = createContext();
 
 const TransactionProvider = ({ children }) => {
-  const [deduction, setDeduction] = useState(getInitialState('deduction',[]));
-  const [income, setIncome] = useState(getInitialState('income',[]));
+  const [deduction, setDeduction] = useState(getInitialState('deduction', []));
+  const [income, setIncome] = useState(getInitialState('income', []));
 
   const addTransaction = transaction => {
     const { transactionType } = transaction;
@@ -20,6 +20,12 @@ const TransactionProvider = ({ children }) => {
       });
     }
   };
+  const removeTransaction = (id, transactionType) => {
+    transactionType === 'deduction' &&
+      setDeduction(preState => preState.filter(cat => cat.id !== id));
+    transactionType === 'income' &&
+      setIncome(preState => preState.filter(cat => cat.id !== id));
+  };
   useEffect(() => {
     setToLS('deduction', deduction);
   }, [deduction]);
@@ -27,7 +33,9 @@ const TransactionProvider = ({ children }) => {
     setToLS('income', income);
   }, [income]);
   return (
-    <TransactionContext.Provider value={{ addTransaction, deduction, income }}>
+    <TransactionContext.Provider
+      value={{ addTransaction, deduction, income, removeTransaction }}
+    >
       {children}
     </TransactionContext.Provider>
   );

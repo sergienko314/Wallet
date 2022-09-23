@@ -1,26 +1,23 @@
-import { createContext,  useState , useEffect} from "react";
-import {getInitialState , setToLS } from '../helpers'
-export const  CategoriesContext =  createContext()
-
+import { createContext, useState, useEffect } from 'react';
+import { getInitialState, setToLS } from '../helpers';
+export const CategoriesContext = createContext();
 
 const CategoriesProvider = ({ children }) => {
+  const [deductionCategories, setDeductionCategories] = useState(
+    getInitialState('deductionCategories', [])
+  );
+  const [incomeCategories, setincomeCategories] = useState(
+    getInitialState('incomeCategories', [])
+  );
 
-    const [deductionCategories, setDeductionCategories] = useState(
-    getInitialState('deductionCategories',[])
-    );
-     const [incomeCategories, setincomeCategories] = useState(
-    getInitialState('incomeCategories',[])
-     );
-    
-    
-     const removeCategory = (id, transactionType) => {
+  const removeCategory = (id, transactionType) => {
     transactionType === 'deduction' &&
       setDeductionCategories(preState => preState.filter(cat => cat.id !== id));
     transactionType === 'income' &&
       setincomeCategories(preState => preState.filter(cat => cat.id !== id));
-     };
-    
-    const addCategory = (category, transactionType) => {
+  };
+
+  const addCategory = (category, transactionType) => {
     if (transactionType === 'deduction') {
       setDeductionCategories(prewDeduction => {
         return [...prewDeduction, category];
@@ -31,19 +28,27 @@ const CategoriesProvider = ({ children }) => {
         return [...prewIncome, category];
       });
     }
-    };
-    
-    useEffect(() => {
+  };
+
+  useEffect(() => {
     setToLS('deductionCategories', deductionCategories);
-    }, [deductionCategories]);
-    useEffect(() => {
+  }, [deductionCategories]);
+  useEffect(() => {
     setToLS('incomeCategories', incomeCategories);
   }, [incomeCategories]);
 
-    return (<CategoriesContext.Provider
-    value={{removeCategory , addCategory, deductionCategories , incomeCategories}}>
-        {children}
-    </CategoriesContext.Provider>);
-}
- 
+  return (
+    <CategoriesContext.Provider
+      value={{
+        removeCategory,
+        addCategory,
+        deductionCategories,
+        incomeCategories,
+      }}
+    >
+      {children}
+    </CategoriesContext.Provider>
+  );
+};
+
 export default CategoriesProvider;
