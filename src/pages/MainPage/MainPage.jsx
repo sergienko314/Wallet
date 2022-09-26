@@ -1,8 +1,8 @@
-import Header from '../Header';
-import TransactionForm from '../TransactionForm';
-import MainButtons from '../MainButtons';
-import Categories from 'components/Categories';
 import { useState } from 'react';
+import Header from 'components/Header';
+import TransactionForm from 'components/TransactionForm';
+import MainButtons from 'components/MainButtons';
+import Categories from 'components/Categories';
 
 const initialForm = {
   date: '',

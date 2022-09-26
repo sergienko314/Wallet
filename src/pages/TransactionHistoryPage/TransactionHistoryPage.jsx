@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import Header from '../Header';
+import Header from '../../components/Header';
 import {
   Item,
   List,
@@ -25,7 +25,7 @@ const TransactionHistoryPage = () => {
   };
   return (
     <>
-      <Header title={transactionType === 'deduction' ? 'Расходы' : 'Доходы'} />
+      <Header to={'/transaction'} title={transactionType === 'deduction' ? 'Расходы' : 'Доходы'} />
       <List>
         {transactions.map(({ id, date, time, summary, currency, comment }) => {
           return (
