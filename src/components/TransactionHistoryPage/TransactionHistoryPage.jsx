@@ -1,4 +1,5 @@
 import { useContext, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import Header from '../Header';
 import {
@@ -11,7 +12,8 @@ import {
 } from './TransactionHistoryPage.styled';
 import { TransactionContext } from '../../context';
 
-const TransactionHistoryPage = ({ changePageHandler, transactionType }) => {
+const TransactionHistoryPage = () => {
+  const { transactionType } = useParams();
   const [idMenu, setIdMenu] = useState('');
   const transactionsValue = useContext(TransactionContext);
   const transactions = transactionsValue[transactionType];
@@ -23,10 +25,7 @@ const TransactionHistoryPage = ({ changePageHandler, transactionType }) => {
   };
   return (
     <>
-      <Header
-        title={transactionType === 'deduction' ? 'Расходы' : 'Доходы'}
-        changePageHandler={changePageHandler}
-      />
+      <Header title={transactionType === 'deduction' ? 'Расходы' : 'Доходы'} />
       <List>
         {transactions.map(({ id, date, time, summary, currency, comment }) => {
           return (
