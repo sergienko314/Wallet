@@ -70,7 +70,8 @@ const TransactionForm = ({
           type="button"
           value={category}
           name="category"
-          onClick={openCategoriesHandler}
+          
+          // onClick={openCategoriesHandler}
           onChange={handleChange}
         ></Input>
       </Label>

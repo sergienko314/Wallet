@@ -3,6 +3,7 @@ import Header from 'components/Header';
 import TransactionForm from 'components/TransactionForm';
 import MainButtons from 'components/MainButtons';
 import Categories from 'components/Categories';
+import { Route, Routes } from 'react-router-dom';
 
 const initialForm = {
   date: '',
@@ -52,7 +53,38 @@ const MainPage = ({
 
   return (
     <>
-      {!isCategories ? (
+      <Routes>
+        <Route index element={<>
+          <Header title="Wallet" />
+          <main>
+            <TransactionForm
+              openCategoriesHandler={openCategoriesHandler}
+              dataForm={form}
+              handleChange={handleChange}
+              reset={reset}
+            />
+            <MainButtons changePageHandler={changePageHandler} />
+          </main>
+        </>}
+        />
+        <Route path="categories" element={
+          <>
+          <Header
+            title="Categories"
+            changePageHandler={closeCategoriesHandler}
+          />
+          <main>
+            <Categories
+              removeCategory={removeCategory}
+              setCategory={setCategory}
+              addCategory={addCategory}
+              transactionType={form.transactionType}
+            />
+          </main>
+        </>}
+        />
+      </Routes>
+      {/* {!isCategories ? (
         <>
           <Header title="Wallet" />
           <main>
@@ -75,15 +107,12 @@ const MainPage = ({
             <Categories
               removeCategory={removeCategory}
               setCategory={setCategory}
-              // categoriesList={
-              //  
-              // }
               addCategory={addCategory}
               transactionType={form.transactionType}
             />
-          </main>
-        </>
-      )}
+          </main> */}
+        {/* </>
+      )} */}
     </>
   );
 };
