@@ -10,7 +10,7 @@ export const App = () => {
     <Conteiner>
       <>
         <Routes>
-          <Route path="/transaction" element={<MainPage />} />
+          <Route path="/transaction/*" element={<MainPage />} />
           <Route
             path="/history/:transactionType"
             element={<TransactionHistoryPage />}
