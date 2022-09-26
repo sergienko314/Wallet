@@ -1,7 +1,9 @@
-import { HeaderStyled, Button } from './Header.styled';
+import { HeaderStyled, Button, ButtonHeaderLink } from './Header.styled';
 import sprite from '../../assets/icons/sprite.svg';
+
+
 console.log(sprite);
-const Header = ({ title, btnContent, changePageHandler }) => {
+const Header = ({ title, changePageHandler, to }) => {
   return (
     <HeaderStyled>
       {changePageHandler ? (
@@ -14,7 +16,11 @@ const Header = ({ title, btnContent, changePageHandler }) => {
             <use href={sprite + '#icon-arrow-left2'}></use>
           </svg>
         </Button>
-      ) : null}
+      ) : to? <ButtonHeaderLink to={to}>
+          <svg>
+            <use href={sprite + '#icon-arrow-left2'}></use>
+          </svg>
+      </ButtonHeaderLink>: null}
       <h1>{title}</h1>
     </HeaderStyled>
   );
