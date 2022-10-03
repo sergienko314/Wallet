@@ -1,16 +1,18 @@
-
-import { createStore } from 'redux';
+import { combineReducers, createStore } from 'redux';
 import { composeWithDevTools } from '@redux-devtools/extension';
+import { transactionReducer } from './transacitions/transaction.reduser';
 
-const store = createStore(
-  reducer,
-    composeWithDevTools(
-      
-  )
-);
+// const state = {
+//   transactions: {
+//     income: [],
+//     deduction: [],
+//   },
+// };
 
-function reducer(state = { a: 21}, action) {
-    return state     
-}
+const rootReducer = combineReducers({
+  transactions: transactionReducer,
+});
 
-export default store
+const store = createStore(rootReducer, composeWithDevTools());
+
+export default store;
