@@ -6,21 +6,29 @@ import {
   Submit,
 } from './TransactionForm.styled';
 import sprite from '../../assets/icons/sprite.svg';
-import { useContext } from 'react';
-import { TransactionContext } from '../../context';
-
+//import { useContext } from 'react';
+//import { TransactionContext } from '../../context';
+import {
+  addIncome,
+  addDeduction,
+} from '../../redux/transacitions/transaction.actions';
+import { useDispatch } from 'react-redux';
 const TransactionForm = ({
   dataForm,
   handleChange,
   openCategoriesHandler,
   reset,
 }) => {
-  const { addTransaction } = useContext(TransactionContext);
+  const dispatch = useDispatch();
+  //const { addTransaction } = useContext(TransactionContext);
 
   const handleSubmit = e => {
     e.preventDefault();
     dataForm.id = Date.now();
-    addTransaction(dataForm);
+    // addTransaction(dataForm);
+    dataForm.transactionType === 'income' && dispatch(addIncome(dataForm));
+    dataForm.transactionType === 'deduction' &&
+      dispatch(addDeduction(dataForm));
     reset();
   };
   const { date, time, category, summary, currency, comments, transactionType } =
@@ -70,7 +78,6 @@ const TransactionForm = ({
           type="button"
           value={category}
           name="category"
-          
           // onClick={openCategoriesHandler}
           onChange={handleChange}
         ></Input>
