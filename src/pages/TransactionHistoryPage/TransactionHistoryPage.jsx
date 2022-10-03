@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
-
+import { useSelector } from 'react-redux';
 import Header from '../../components/Header';
 import {
   Item,
@@ -15,7 +15,8 @@ import { TransactionContext } from '../../context';
 const TransactionHistoryPage = () => {
   const { transactionType } = useParams();
   const [idMenu, setIdMenu] = useState('');
-  const transactionsValue = useContext(TransactionContext);
+  //const transactionsValue = useContext(TransactionContext);
+  const transactionsValue = useSelector(state => state.transactions);
   const transactions = transactionsValue[transactionType];
 
   const handleOpenMenu = id => {
@@ -25,7 +26,10 @@ const TransactionHistoryPage = () => {
   };
   return (
     <>
-      <Header to={'/transaction'} title={transactionType === 'deduction' ? 'Расходы' : 'Доходы'} />
+      <Header
+        to={'/transaction'}
+        title={transactionType === 'deduction' ? 'Расходы' : 'Доходы'}
+      />
       <List>
         {transactions.map(({ id, date, time, summary, currency, comment }) => {
           return (
