@@ -13,12 +13,16 @@ import {
   addDeduction,
 } from '../../redux/transacitions/transaction.actions';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
 const TransactionForm = ({
   dataForm,
   handleChange,
   openCategoriesHandler,
   reset,
 }) => {
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
   //const { addTransaction } = useContext(TransactionContext);
 
@@ -78,7 +82,9 @@ const TransactionForm = ({
           type="button"
           value={category}
           name="category"
-          // onClick={openCategoriesHandler}
+          onClick={() => {
+            navigate('categories');
+          }}
           onChange={handleChange}
         ></Input>
       </Label>
