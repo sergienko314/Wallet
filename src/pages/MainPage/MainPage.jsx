@@ -3,7 +3,8 @@ import Header from 'components/Header';
 import TransactionForm from 'components/TransactionForm';
 import MainButtons from 'components/MainButtons';
 import Categories from 'components/Categories';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
+
 
 const initialForm = {
   date: '',
@@ -22,8 +23,9 @@ const MainPage = ({
   addCategory,
   // categories,
 }) => {
+
+  const navigate = useNavigate()
   const [form, setForm] = useState(initialForm);
-  const [isCategories, setIsCategories] = useState(false);
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -33,11 +35,9 @@ const MainPage = ({
     });
   };
 
-  const openCategoriesHandler = () => {
-    setIsCategories(true);
-  };
+
   const closeCategoriesHandler = () => {
-    setIsCategories(false);
+    navigate(-1)
   };
 
   const setCategory = category => {
@@ -58,7 +58,6 @@ const MainPage = ({
           <Header title="Wallet" />
           <main>
             <TransactionForm
-              openCategoriesHandler={openCategoriesHandler}
               dataForm={form}
               handleChange={handleChange}
               reset={reset}
@@ -84,35 +83,6 @@ const MainPage = ({
         </>}
         />
       </Routes>
-      {/* {!isCategories ? (
-        <>
-          <Header title="Wallet" />
-          <main>
-            <TransactionForm
-              openCategoriesHandler={openCategoriesHandler}
-              dataForm={form}
-              handleChange={handleChange}
-              reset={reset}
-            />
-            <MainButtons changePageHandler={changePageHandler} />
-          </main>
-        </>
-      ) : (
-        <>
-          <Header
-            title="Categories"
-            changePageHandler={closeCategoriesHandler}
-          />
-          <main>
-            <Categories
-              removeCategory={removeCategory}
-              setCategory={setCategory}
-              addCategory={addCategory}
-              transactionType={form.transactionType}
-            />
-          </main> */}
-        {/* </>
-      )} */}
     </>
   );
 };

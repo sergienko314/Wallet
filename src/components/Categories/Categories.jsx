@@ -1,24 +1,23 @@
-import { CategoriesContext } from '../../context';
+
 import PropTypes from 'prop-types';
-import { useContext } from 'react';
 import { useState } from 'react';
 import {
   addDeductionCategory,
   addIncomeCategory,
+  removeDeductionCategory,
+  removeIncomeCategory,
 } from '../../redux/categories/categoriesSlice';
-import { useDispatch } from 'react-redux';
-
+import { useDispatch, useSelector } from 'react-redux';
 const Categories = ({ transactionType, setCategory }) => {
   const dispatch = useDispatch();
-  const value = useContext(CategoriesContext);
+
+  const categories = useSelector(({ categories }) => categories);
 
   const [input, setInput] = useState('');
   const [idMenu, setIdMenu] = useState('');
 
   const categoriesList =
-    transactionType === 'deduction'
-      ? value.deductionCategories
-      : value.incomeCategories;
+    transactionType === 'deduction' ? categories.deduction : categories.income;
 
   const handleChange = e => {
     setInput(e.target.value.trimStart());
@@ -31,6 +30,11 @@ const Categories = ({ transactionType, setCategory }) => {
       return prevIdMenu === id ? '' : id;
     });
   };
+
+  const removeCategory = id =>
+    transactionType === 'deduction'
+      ? dispatch(removeDeductionCategory(id))
+      : dispatch(removeIncomeCategory(id));
   const handleSubmit = e => {
     e.preventDefault();
 
@@ -80,11 +84,7 @@ const Categories = ({ transactionType, setCategory }) => {
                     <button>Edit</button>
                   </li>
                   <li>
-                    <button
-                      onClick={() => value.removeCategory(id, transactionType)}
-                    >
-                      Remove
-                    </button>
+                    <button onClick={() => removeCategory(id)}>Remove</button>
                   </li>
                 </ul>
               )}
