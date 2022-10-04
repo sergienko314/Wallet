@@ -30,4 +30,4 @@ export const {
   removeDeductionCategory,
 } = categoriesSlice.actions;
 
-export default categoriesSlice.reducer
+export default categoriesSlice.reducer;

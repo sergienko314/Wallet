@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import {  useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Header from '../../components/Header';
@@ -10,7 +10,6 @@ import {
   Summary,
   Currency,
 } from './TransactionHistoryPage.styled';
-import { TransactionContext } from '../../context';
 
 const TransactionHistoryPage = () => {
   const { transactionType } = useParams();
