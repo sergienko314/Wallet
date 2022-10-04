@@ -2,12 +2,19 @@ import { CategoriesContext } from '../../context';
 import PropTypes from 'prop-types';
 import { useContext } from 'react';
 import { useState } from 'react';
+import {
+  addDeductionCategory,
+  addIncomeCategory,
+} from '../../redux/categories/categoriesSlice';
+import { useDispatch } from 'react-redux';
 
 const Categories = ({ transactionType, setCategory }) => {
+  const dispatch = useDispatch();
   const value = useContext(CategoriesContext);
 
   const [input, setInput] = useState('');
   const [idMenu, setIdMenu] = useState('');
+
   const categoriesList =
     transactionType === 'deduction'
       ? value.deductionCategories
@@ -36,13 +43,20 @@ const Categories = ({ transactionType, setCategory }) => {
 
     categoriesList.some(elem => elem.category.toLowerCase() === normalizedInput)
       ? alert('i have this category')
-      : value.addCategory(
-          {
+      : transactionType === 'deduction'
+      ? dispatch(
+          addDeductionCategory({
             id: Date.now(),
             category: inputTrimed,
-          },
-          transactionType
+          })
+        )
+      : dispatch(
+          addIncomeCategory({
+            id: Date.now(),
+            category: inputTrimed,
+          })
         );
+
     reset();
   };
 
