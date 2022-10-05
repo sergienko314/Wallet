@@ -14,6 +14,8 @@ import {
 } from '../../redux/transacitions/transaction.actions';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { addDedactionTransactionsAPI, addIncomeTransactionsAPI } from 'services/fireBaseAPI';
+import { addIncomeTransactions , addDeductionsTransactions} from 'redux/transacitions/transactionsOperations';
 
 const TransactionForm = ({
   dataForm,
@@ -28,11 +30,10 @@ const TransactionForm = ({
 
   const handleSubmit = e => {
     e.preventDefault();
-    dataForm.id = Date.now();
     // addTransaction(dataForm);
-    dataForm.transactionType === 'income' && dispatch(addIncome(dataForm));
+    dataForm.transactionType === 'income' && dispatch(addIncomeTransactions(dataForm))
     dataForm.transactionType === 'deduction' &&
-      dispatch(addDeduction(dataForm));
+      dispatch(addDeductionsTransactions(dataForm));
     reset();
   };
   const { date, time, category, summary, currency, comments, transactionType } =
