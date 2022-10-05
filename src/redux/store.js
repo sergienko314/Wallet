@@ -1,4 +1,4 @@
-import { transactionReducer } from './transacitions/transaction.reduser';
+import transactionReducer from './transacitions/transactionSlice';
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import categoriesReducer from '../redux/categories/categoriesSlice';
 
