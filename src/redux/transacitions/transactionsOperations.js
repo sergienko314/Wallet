@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   addIncomeTransactionsAPI,
   addDedactionTransactionsAPI,
+  getTransactionsAPI,
 } from 'services/fireBaseAPI';
 
 export const addIncomeTransactions = createAsyncThunk(
@@ -23,6 +24,18 @@ export const addDeductionsTransactions = createAsyncThunk(
     try {
       const transactions = await addDedactionTransactionsAPI(data);
       return transactions;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const getTransactions = createAsyncThunk(
+  'transactions/get',
+  async (_, thunkAPI) => {
+    try {
+      const transacitions = await getTransactionsAPI();
+      return transacitions;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }

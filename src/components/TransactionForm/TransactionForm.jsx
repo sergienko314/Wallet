@@ -6,16 +6,13 @@ import {
   Submit,
 } from './TransactionForm.styled';
 import sprite from '../../assets/icons/sprite.svg';
-//import { useContext } from 'react';
-//import { TransactionContext } from '../../context';
-import {
-  addIncome,
-  addDeduction,
-} from '../../redux/transacitions/transaction.actions';
+
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { addDedactionTransactionsAPI, addIncomeTransactionsAPI } from 'services/fireBaseAPI';
-import { addIncomeTransactions , addDeductionsTransactions} from 'redux/transacitions/transactionsOperations';
+import {
+  addIncomeTransactions,
+  addDeductionsTransactions,
+} from 'redux/transacitions/transactionsOperations';
 
 const TransactionForm = ({
   dataForm,
@@ -31,7 +28,8 @@ const TransactionForm = ({
   const handleSubmit = e => {
     e.preventDefault();
     // addTransaction(dataForm);
-    dataForm.transactionType === 'income' && dispatch(addIncomeTransactions(dataForm))
+    dataForm.transactionType === 'income' &&
+      dispatch(addIncomeTransactions(dataForm));
     dataForm.transactionType === 'deduction' &&
       dispatch(addDeductionsTransactions(dataForm));
     reset();

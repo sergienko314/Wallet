@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import {
   addIncomeTransactions,
   addDeductionsTransactions,
+  getTransactions,
 } from './transactionsOperations';
 
 const transacitionsSlice = createSlice({
@@ -32,6 +33,16 @@ const transacitionsSlice = createSlice({
       state.deduction.push(payload);
     },
     [addDeductionsTransactions.rejected]: (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
+    },
+    [getTransactions.pending]: state => {
+      state.isLoading = true;
+    },
+    [getTransactions.fulfilled]: (state, { payload }) => {
+      return { ...state, isLoading: false, ...payload };
+    },
+    [getTransactions.rejected]: (state, { payload }) => {
       state.isLoading = false;
       state.error = payload;
     },
