@@ -1,6 +1,6 @@
-import {  useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Header from '../../components/Header';
 import {
   Item,
@@ -10,19 +10,24 @@ import {
   Summary,
   Currency,
 } from './TransactionHistoryPage.styled';
+import { getTransactions } from 'redux/transacitions/transactionsOperations';
 
 const TransactionHistoryPage = () => {
+  const dispatch = useDispatch();
   const { transactionType } = useParams();
   const [idMenu, setIdMenu] = useState('');
   //const transactionsValue = useContext(TransactionContext);
   const transactionsValue = useSelector(state => state.transactions);
   const transactions = transactionsValue[transactionType];
-
   const handleOpenMenu = id => {
     setIdMenu(prevIdMenu => {
       return prevIdMenu === id ? '' : id;
     });
   };
+  useEffect(() => {
+    if (transactions.length === 0) dispatch(getTransactions());
+  }, [dispatch, transactions]);
+
   return (
     <>
       <Header

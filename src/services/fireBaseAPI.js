@@ -1,5 +1,3 @@
-import { ThemeConsumer } from 'styled-components';
-
 const { default: axios } = require('axios');
 
 axios.defaults.baseURL =
@@ -25,4 +23,20 @@ export const addDedactionTransactionsAPI = data => {
       ...data,
     };
   });
+};
+
+export const getTransactionsAPI = async () => {
+  try {
+    const response = await axios.get('transactions.json');
+    const { deduction, income } = response.data;
+    const dedactionArr = Object.entries(deduction).map(([id, data]) => {
+      return { id, ...data };
+    });
+    const incomeArr = Object.entries(income).map(([id, data]) => {
+      return { id, ...data };
+    });
+    return { deduction: dedactionArr, income: incomeArr };
+  } catch (error) {
+    console.log(error);
+  }
 };
