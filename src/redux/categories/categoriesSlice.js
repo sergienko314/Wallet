@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import {
   addIncomeCategory,
   addDeductionCategory,
+  getCategoriesOperation,
 } from './categoriesOperations';
 
 export const categoriesSlice = createSlice({
@@ -41,6 +42,28 @@ export const categoriesSlice = createSlice({
       state.deduction.push(payload);
     },
     [addDeductionCategory.rejected]: (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
+    },
+    [getCategoriesOperation('deduction').pending]: state => {
+      state.isLoading = true;
+    },
+    [getCategoriesOperation('deduction').fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.deduction = payload;
+    },
+    [getCategoriesOperation('deduction').rejected]: (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
+    },
+    [getCategoriesOperation('income').pending]: state => {
+      state.isLoading = true;
+    },
+    [getCategoriesOperation('income').fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.income = payload;
+    },
+    [getCategoriesOperation('income').rejected]: (state, { payload }) => {
       state.isLoading = false;
       state.error = payload;
     },
