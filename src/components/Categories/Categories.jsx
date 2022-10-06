@@ -1,13 +1,17 @@
-
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import {
-  addDeductionCategory,
-  addIncomeCategory,
+  // addDeductionCategory,
+  // addIncomeCategory,
   removeDeductionCategory,
   removeIncomeCategory,
 } from '../../redux/categories/categoriesSlice';
+import {
+  addIncomeCategory,
+  addDeductionCategory,
+} from '../../redux/categories/categoriesOperations';
 import { useDispatch, useSelector } from 'react-redux';
+
 const Categories = ({ transactionType, setCategory }) => {
   const dispatch = useDispatch();
 
@@ -35,6 +39,7 @@ const Categories = ({ transactionType, setCategory }) => {
     transactionType === 'deduction'
       ? dispatch(removeDeductionCategory(id))
       : dispatch(removeIncomeCategory(id));
+
   const handleSubmit = e => {
     e.preventDefault();
 
@@ -50,13 +55,11 @@ const Categories = ({ transactionType, setCategory }) => {
       : transactionType === 'deduction'
       ? dispatch(
           addDeductionCategory({
-            id: Date.now(),
             category: inputTrimed,
           })
         )
       : dispatch(
           addIncomeCategory({
-            id: Date.now(),
             category: inputTrimed,
           })
         );

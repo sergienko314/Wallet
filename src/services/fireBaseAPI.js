@@ -40,3 +40,21 @@ export const getTransactionsAPI = async () => {
     console.log(error);
   }
 };
+
+export const addIncomeCategoryAPI = category => {
+  return axios.post('categories/income.json', category).then(res => {
+    return {
+      id: res.data.name,
+      ...category,
+    };
+  });
+};
+
+export const addDeductionCategoryAPI = category => {
+  return axios.post('categories/deduction.json', category).then(res => {
+    return {
+      id: res.data.name,
+      ...category,
+    };
+  });
+};
