@@ -41,3 +41,5 @@ export const getTransactions = createAsyncThunk(
     }
   }
 );
+
+// removeCategoriesAPI;

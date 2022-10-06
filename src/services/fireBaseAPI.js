@@ -65,3 +65,9 @@ export const getCategoriesAPI = categoryTransType => {
     .get(`categories/${categoryTransType}.json`)
     .then(response => updateDataObjToArray(response.data));
 };
+
+export const removeCategoriesAPI = (categoryTransType, id) => {
+  return axios
+    .delete(`categories/${categoryTransType}/${id}.json`)
+    .then(response => response.data);
+};

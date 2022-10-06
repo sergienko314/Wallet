@@ -1,12 +1,9 @@
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
+
 import {
-  // addDeductionCategory,
-  // addIncomeCategory,
-  removeDeductionCategory,
-  removeIncomeCategory,
-} from '../../redux/categories/categoriesSlice';
-import {
+  removeDeductionCategories,
+  removeIncomeCategories,
   addIncomeCategory,
   addDeductionCategory,
   getCategoriesOperation,
@@ -44,8 +41,8 @@ const Categories = ({ transactionType, setCategory }) => {
 
   const removeCategory = id =>
     transactionType === 'deduction'
-      ? dispatch(removeDeductionCategory(id))
-      : dispatch(removeIncomeCategory(id));
+      ? dispatch(removeDeductionCategories(id))
+      : dispatch(removeIncomeCategories(id));
 
   const handleSubmit = e => {
     e.preventDefault();

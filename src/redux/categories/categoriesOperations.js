@@ -5,6 +5,7 @@ import {
   addIncomeCategoryAPI,
   addDeductionCategoryAPI,
   getCategoriesAPI,
+  removeCategoriesAPI,
 } from '../../services/fireBaseAPI';
 
 export const addIncomeCategory = createAsyncThunk(
@@ -82,3 +83,27 @@ export function getCategoriesOperation(transactionType) {
   );
   return actionThunk;
 }
+
+export const removeIncomeCategories = createAsyncThunk(
+  'categories/remove/income',
+  async (id, thunkAPI) => {
+    try {
+      await removeCategoriesAPI('income', id);
+      return id;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const removeDeductionCategories = createAsyncThunk(
+  'categories/remove/deduction',
+  async (id, thunkAPI) => {
+    try {
+      await removeCategoriesAPI('deduction', id);
+      return id;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);

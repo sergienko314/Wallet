@@ -3,6 +3,8 @@ import {
   addIncomeCategory,
   addDeductionCategory,
   getCategoriesOperation,
+  removeDeductionCategories,
+  removeIncomeCategories,
 } from './categoriesOperations';
 
 export const categoriesSlice = createSlice({
@@ -64,6 +66,28 @@ export const categoriesSlice = createSlice({
       state.income = payload;
     },
     [getCategoriesOperation('income').rejected]: (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
+    },
+    [removeDeductionCategories.pending]: state => {
+      state.isLoading = true;
+    },
+    [removeDeductionCategories.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.deduction = state.deduction.filter(({ id }) => id !== payload);
+    },
+    [removeDeductionCategories.rejected]: (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
+    },
+    [removeIncomeCategories.pending]: state => {
+      state.isLoading = true;
+    },
+    [removeIncomeCategories.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.income = state.income.filter(({ id }) => id !== payload);
+    },
+    [removeIncomeCategories.rejected]: (state, { payload }) => {
       state.isLoading = false;
       state.error = payload;
     },
