@@ -6,6 +6,11 @@ axios.defaults.baseURL =
 // getIncomeTransactions = () =>
 
 //   getDedactionTransactions = () =>
+const updateDataObjToArray = response => {
+  return Object.entries(response).map(([id, data]) => {
+    return { id, ...data };
+  });
+};
 
 export const addIncomeTransactionsAPI = data => {
   return axios.post('transactions/income.json', data).then(respons => {
@@ -29,12 +34,8 @@ export const getTransactionsAPI = async () => {
   try {
     const response = await axios.get('transactions.json');
     const { deduction, income } = response.data;
-    const dedactionArr = Object.entries(deduction).map(([id, data]) => {
-      return { id, ...data };
-    });
-    const incomeArr = Object.entries(income).map(([id, data]) => {
-      return { id, ...data };
-    });
+    const dedactionArr = updateDataObjToArray(deduction);
+    const incomeArr = updateDataObjToArray(income);
     return { deduction: dedactionArr, income: incomeArr };
   } catch (error) {
     console.log(error);
@@ -57,4 +58,10 @@ export const addDeductionCategoryAPI = category => {
       ...category,
     };
   });
+};
+
+export const getCategoriesAPI = categoryTransType => {
+  return axios
+    .get(`categories/${categoryTransType}.json`)
+    .then(response => updateDataObjToArray(response.data));
 };

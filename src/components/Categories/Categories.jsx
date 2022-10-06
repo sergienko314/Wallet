@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   // addDeductionCategory,
   // addIncomeCategory,
@@ -9,11 +9,18 @@ import {
 import {
   addIncomeCategory,
   addDeductionCategory,
+  getCategoriesOperation,
 } from '../../redux/categories/categoriesOperations';
 import { useDispatch, useSelector } from 'react-redux';
 
 const Categories = ({ transactionType, setCategory }) => {
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getCategoriesOperation(transactionType)());
+
+    console.log(getCategoriesOperation(transactionType).pending);
+  }, [dispatch, transactionType]);
 
   const categories = useSelector(({ categories }) => categories);
 
@@ -48,11 +55,8 @@ const Categories = ({ transactionType, setCategory }) => {
       return;
     }
     const inputTrimed = input.trimEnd();
-    const normalizedInput = inputTrimed.toLowerCase();
 
-    categoriesList.some(elem => elem.category.toLowerCase() === normalizedInput)
-      ? alert('i have this category')
-      : transactionType === 'deduction'
+    transactionType === 'deduction'
       ? dispatch(
           addDeductionCategory({
             category: inputTrimed,
