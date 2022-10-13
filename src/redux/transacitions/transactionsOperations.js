@@ -8,8 +8,13 @@ import {
 export const addIncomeTransactions = createAsyncThunk(
   'transaction/add/income',
   async (data, thunkAPI) => {
+    const { localId, idToken } = thunkAPI.getState().auth;
     try {
-      const transactions = await addIncomeTransactionsAPI(data);
+      const transactions = await addIncomeTransactionsAPI(
+        data,
+        localId,
+        idToken
+      );
       return transactions;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -20,9 +25,15 @@ export const addIncomeTransactions = createAsyncThunk(
 export const addDeductionsTransactions = createAsyncThunk(
   'transaction/add/dedaction',
   async (data, thunkAPI) => {
+    const { localId, idToken } = thunkAPI.getState().auth;
+
     console.log(thunkAPI);
     try {
-      const transactions = await addDedactionTransactionsAPI(data);
+      const transactions = await addDedactionTransactionsAPI(
+        data,
+        localId,
+        idToken
+      );
       return transactions;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
